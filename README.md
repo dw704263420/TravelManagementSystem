@@ -7,18 +7,31 @@
 软件架构说明
 
 └─WEB-INF
+
 ├─classes
+
 │  ├─com
+
 │  │  └─kuang
+
 │  │      ├─controller
+
 │  │      ├─dao
+
 │  │      ├─filter
+
 │  │      ├─pojo
+
 │  │      ├─service
+
 │  │      │  └─impl
+
 │  │      └─utils
+
 │  └─META-INF
+
 └─lib
+
 #### 安装教程
 
 1.  在本地Mysql数据库执行sql文件
