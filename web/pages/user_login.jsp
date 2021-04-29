@@ -30,7 +30,7 @@
 
 				if(data.flag===true)
 				{   console.log("成功le ");
-					location.href="${pageContext.request.contextPath}/pages/user_index.jsp";
+				location.href="${pageContext.request.contextPath}/forIndex";
 				}else
 				{
 					console.log("出错了");
