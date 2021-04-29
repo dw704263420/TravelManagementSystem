@@ -110,7 +110,7 @@
                 </div>
 
 
-                <button type="button" class="btn btn-warning">不喜欢？换一批</button>
+                <button type="button" class="btn btn-warning">不喜欢？刷新页面试试！</button>
 
             </div>
             <div class="heima_gn">
