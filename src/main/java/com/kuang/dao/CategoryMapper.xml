@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--修改下对应的mapper名字 -->
+<mapper namespace="com.kuang.dao.CategoryMapper">
+<select id="findAll" resultType="Category">
+    select * from ssm.tab_category
+</select>
+</mapper>
