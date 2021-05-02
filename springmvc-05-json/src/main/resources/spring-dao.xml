@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<context:property-placeholder location="classpath:database.properties" ignore-unresolvable="true"/>
+
+
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+
+
+        <property name="initialSize" value="10" />
+
+        <property name="minIdle" value="2" />
+
+        <property name="maxActive" value="15" />
+
+        <property name="maxWait" value="10000" />
+
+
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="testWhileIdle" value="true" />
+
+        <property name="testOnBorrow" value="true" />
+
+        <property name="testOnReturn" value="false" />
+    </bean>
+
+<!--    3.sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="plugins">
+            <array >
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <prop key="helperDialect">mysql</prop>
+                            <prop key="reasonable">true</prop>
+<!--           reasonable不能非法查询：页数小于1 查询到的为第一个  页数大于最后一页 查询到的为最后一页                 -->
+                        </props>
+                    </property>
+
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.kuang.dao/"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!--    给那些方法配置事务-->
+        <!--    配置事务的传播特性:new  propagation="REQUIRED"  默认也是这个 -->
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+<!--        &lt;!&ndash;        切入点  mapper下的所有类的所有方法 都被上面那个txAdvice 横切一刀&ndash;&gt;-->
+        <aop:pointcut id="txPonitCut" expression="execution(* com.kuang.dao.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPonitCut"/>
+    </aop:config>
+
+
+</beans>
