@@ -37,7 +37,7 @@
 
 1.  在本地Mysql数据库执行sql文件，sql文件处于springmvc-05-json内
 2.  启动mysql和redis，并且保证网络处于联网状态（邮件验证需要网络）
-3.  加载pom文件加载项目
+3.  加载pom文件加载项目【父依赖和子依赖都需要加载，建议使用IDEA打开该项目】
 4.  进行tomcat配置如下，其中URL地址改成如下http://localhost:8080/springmvc_05_json_war_exploded/
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0503/110103_e79ab5ea_7810509.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0503/110121_96751b20_7810509.png "屏幕截图.png")
