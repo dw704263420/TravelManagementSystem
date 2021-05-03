@@ -11,23 +11,23 @@
 
 ├─classes
 
-│  ├─com
+│ ├com
 
-│  │  └─kuang
+│  │└─kuang
 
-│  │      ├─controller
+│  │   |  ├─controller
 
-│  │      ├─dao
+│  │   |  ├─dao
 
-│  │      ├─filter
+│  │   |  ├─filter
 
-│  │      ├─pojo
+│  │   |  ├─pojo
 
-│  │      ├─service
+│  │   |  ├─service
 
-│  │      │  └─impl
+│  │   |  │  └─impl
 
-│  │      └─utils
+│  │   |  └─utils
 
 │  └─META-INF
 
@@ -43,6 +43,7 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0503/110121_96751b20_7810509.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0503/110144_56e40383_7810509.png "屏幕截图.png")
 5.  点击启动即可启动该项目
+6.  部署失败可以邮箱联系我704263420@qq.com
 
 #### 使用说明
 
