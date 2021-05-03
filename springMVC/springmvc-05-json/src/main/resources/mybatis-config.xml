@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<typeAliases>
+    <package name="com.kuang.pojo"/>
+</typeAliases>
+    <mappers>
+        <mapper resource="com/kuang/dao/OrdersMapper.xml"/>
+        <mapper resource="com/kuang/dao/ProductMapper.xml"/>
+        <mapper resource="com/kuang/dao/MemberMapper.xml"/>
+        <mapper resource="com/kuang/dao/TravellersMapper.xml"/>
+        <mapper resource="com/kuang/dao/RoleMapper.xml"/>
+        <mapper resource="com/kuang/dao/UserMapper.xml"/>
+        <mapper resource="com/kuang/dao/PermissionMapper.xml"/>
+        <mapper resource="com/kuang/dao/RouteImgMapper.xml"/>
+        <mapper resource="com/kuang/dao/CategoryMapper.xml"/>
+        <mapper resource="com/kuang/dao/SysMapper.xml"/>
+    </mappers>
+
+</configuration>

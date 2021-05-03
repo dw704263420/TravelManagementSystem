@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--修改下对应的mapper名字 -->
+<mapper namespace="com.kuang.dao.RouteImgMapper">
+<select id="findProductImg" resultType="RouteImg">
+    select * from ssm.tab_route_img where rid = #{id}
+</select>
+    <insert id="addRouteImage" parameterType="RouteImg">
+        insert into tab_route_img (rid, bigPic, smallPic) values (#{rid},#{bigPic},#{smallPic});
+    </insert>
+    <delete id="deleteById">
+        delete from ssm.tab_route_img where rgid =#{rgid}
+    </delete>
+    <update id="changeProductCover" >
+        update ssm.product set rimage =#{rImage} where id = #{productId}
+    </update>
+</mapper>

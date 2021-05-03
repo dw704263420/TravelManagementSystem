@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--修改下对应的mapper名字 -->
+<mapper namespace="com.kuang.dao.SysMapper">
+<insert id="save" >
+insert into ssm.syslog(visitTime, username, ip, url, executionTime, method) VALUES (#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})
+</insert>
+    <select id="findAll" resultType="SysLog">
+        select * from ssm.syslog
+    </select>
+    <select id="queryForUserName" resultType="SysLog">
+        select * from ssm.syslog where username=#{userName}
+    </select>
+    <delete id="deleteAllSysLog">
+        truncate table ssm.syslog
+    </delete>
+</mapper>

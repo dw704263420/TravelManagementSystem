@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--    这个xml文件，尽量不要用有中文注释-->
+<!--    处理器映射器-->
+<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+<!--    处理器适配器-->
+<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+<!--    负责视图解析器，之后如果换成thymeleaf或者 freemarker 这里就就会变，但是目前来说不会这样就行了-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          id="internalResourceViewResolver" >
+<!--        定义前后缀-->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <bean id="/hello" class="com.kuang.controller.HelloController"/>
+
+</beans>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--全局3、将configuration更改成mapper sql方法和语句均写在一个命名空间的mapper下-->
+<!--复合查询，因此用映射来处理下-->
+<mapper namespace="com.kuang.dao.UserMapper">
+
+<resultMap id="UserMapByName" type="com.kuang.pojo.UserInfo">
+    <id column="id" property="id"/>
+    <result property="username" column="username"/>
+    <result property="email" column="email"/>
+    <result property="password" column="password"/>
+    <result property="phoneNum" column="phoneNum"/>
+    <result property="status" column="status"/>
+    <association property="roles" column="id" javaType="list" select="com.kuang.dao.RoleMapper.findRoleByUserId"/>
+</resultMap>
+    <resultMap id="UserMapById" type="com.kuang.pojo.UserInfo">
+        <id column="id" property="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="phoneNum" column="phoneNum"/>
+        <result property="status" column="status"/>
+        <association property="roles" column="id" javaType="list" select="com.kuang.dao.RoleMapper.findRoleByUserId"/>
+    </resultMap>
+
+
+    <select id="findByUsername"  resultMap="UserMapByName">
+    SELECT * FROM ssm.users WHERE username = #{username}
+</select>
+ <select id="findAllUser" resultType="UserInfo">
+     select * from  ssm.users
+ </select>
+    <insert id="saveUser" parameterType="UserInfo">
+        insert into  ssm.users(email, username, password, phoneNum, status,trueName,sex) VALUES (#{email},#{username},#{password},#{phoneNum},#{status},#{trueName},#{sex})
+    </insert>
+    <select id="findByUserId" resultMap="UserMapById">
+        select * from ssm.users where id = #{id}
+    </select>
+<!--    查询该用户没有的角色-->
+    <select id="findOtherRoles" resultType="Role">
+           SELECT * FROM role WHERE  id NOT IN (SELECT roleId FROM users_role WHERE userId=#{userId})
+    </select>
+    <insert id="addRoleToUser">
+        insert into  ssm.users_role(USERID, ROLEID) values (#{userId},#{roleId})
+    </insert>
+    <delete id="deleteRoleByUserId">
+        delete  from ssm.users_role where userId=#{userId} and roleId = #{roleId}
+    </delete>
+    <delete id="deleteUserById">
+        delete  from ssm.users where id=#{userId}
+    </delete>
+    <select id="findUserByUserName" resultType="UserInfo">
+        select * from ssm.users where  username=#{userName}
+    </select>
+    <select id="findUserByaAtiveCode" resultType="UserInfo">
+        select * from ssm.users where activeCode=#{activeCode}
+    </select>
+    <update id="updateUserStatus" >
+        update ssm.users  set status =1 where id=#{userId}
+    </update>
+    <select id="queryForUserName" resultType="UserInfo">
+        select * from ssm.users where username like  CONCAT('%',#{userName},'%')
+    </select>
+</mapper>

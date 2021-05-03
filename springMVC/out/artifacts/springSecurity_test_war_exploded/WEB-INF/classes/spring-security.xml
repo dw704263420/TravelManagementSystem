@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+    <!-- 配置不拦截的资源 ,表示登录也失败页面不进行拦截-->
+<security:http security="none" pattern="/login.html"/>
+<security:http security="none" pattern="/failer.html"/>
+
+<!--    不让它默认帮我们配置登录权限-->
+
+
+    <!-- 在服务器端我们可以通过Spring security提供的注解对方法来进行权限控制。Spring Security在方法的权限控制上
+         支持三种类型的注解，JSR-250注解、@Secured注解和支持表达式的注解，这三种注解默认都是没有启用的，需要
+         单独通过global-method-security元素的对应属性进行启用-->
+
+    <security:global-method-security secured-annotations="enabled"/> <!--在方法前加上该注解就可以@Secured("ROLE_USER")-->
+    <!--    <security:global-method-security pre-post-annotations="disabled"/>-->
+    <!--    <security:global-method-security jsr250-annotations="disabled"/>-->
+
+
+    <!--
+    	配置具体的规则
+    	auto-config="true"	不用自己编写登录的页面，框架提供默认登录页面
+    	use-expressions="false"	是否使用SPEL表达式（没学习过）
+    -->
+    <security:http auto-config="true" use-expressions="false">
+        <!-- 配置具体的拦截的规则 pattern="请求路径的规则" access="访问系统的人，必须有ROLE_USER的角色" -->
+        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+
+        <!-- 定义跳转的具体的页面 -->
+        <security:form-login
+
+                login-page="/login.html"
+                login-processing-url="/login" username-parameter="username" password-parameter="password"
+                authentication-failure-url="/failer.html"
+                default-target-url="/success.html"
+                authentication-success-forward-url="/success.html"
+        />
+
+        <!-- 关闭跨域请求 -->
+        <security:csrf disabled="true"/>
+    </security:http>
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <!--               配置了两个角色，指定了其用户密码以及权限  密码的{noop}是跟版本有关的，相当于前缀吧-->
+                <security:user name="user"  password="{noop}user" authorities="ROLE_USER"/>
+                <security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
